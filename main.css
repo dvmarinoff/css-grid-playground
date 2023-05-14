@@ -1,0 +1,193 @@
+/* Styles */
+:root {
+    /* - Establish 10px as a central root measurement
+       - by just changing this :root font-size in media queries everything
+         (font-size, width, height, margin, padding, etc.) thats defined
+         in rem or em can get larger or smaller
+       - this requires manual adjustment in each media query, but is just one
+         value, and provides more precision
+     */
+    font-size: 10px;
+    font-family: sans-serif;
+}
+
+.home-page--grid {
+    /* - Establish a basic grid system for the home page
+       - 1 col and 5 rows with named lines
+       - sections can be put in any position using just the grid-area property
+     */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:
+        [row-1-start] 1fr
+        [row-2-start] 3fr
+        [row-3-start] 1fr
+        [row-4-start] 1fr
+        [row-5-start] 1fr
+        [row-5-end];
+
+    min-height: 100vh;
+}
+
+.header {
+    /* - establish a separate rem value for the size of this section,
+       - later in media queries you can control the sizing of just this section from
+         this font-size, indipendent of the :root font-size
+       - this provides the ability to encrease the size of one section relative
+         to the others
+     */
+    font-size: 1.6rem;
+    /* - define which slots in the grid system the .header spans
+       - row-start / col-start / row-end / col-end
+     */
+    grid-area: 1 / 1 / 1 / end;
+
+    background-color: hsl(0 80% 80%);
+}
+
+.section {
+    font-size: 2rem;
+    grid-area: 2 / 1 / 2 / end;
+
+    /* - defining the font sizes of children in the parent element as variables
+       - you would most likely need to reference just this class and not all of
+         the children when you want to change the size of something in a media query
+     */
+    --sub-section-font-size: 1.6rem;
+    --sub-sub-section-font-size: 1rem;
+
+    background-color: hsl(45 80% 80%);
+}
+
+.sub-section {
+    font-size: var(--sub-section-font-size);
+    background-color: hsl(45 80% 60%);
+}
+
+.sub-sub-section {
+    font-size: var(--sub-sub-section-font-size);
+    background-color: hsl(45 80% 40%);
+}
+
+.section-two {
+    font-size: 1rem;
+    grid-area: 3 / 1 / 3 / end;
+    background-color: hsl(90 80% 80%);
+}
+
+.section-three {
+    font-size: 1rem;
+    grid-area: 4 / 1 / 4 / end;
+    background-color: hsl(180 80% 80%);
+}
+
+.footer {
+    font-size: 1rem;
+    grid-area: 5 / 1 / 5 / end;
+    background-color: hsl(270 80% 80%);
+}
+
+section, header, footer {
+    padding: 1em 0em 1em 1em;
+}
+
+.header {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1em;
+    grid-area: 1 / 1 / 1 / 1;
+}
+.login {
+    grid-area: 1 / 2 / 1 / 2;
+    justify-self: end;
+    padding: 0 1em;
+    font-weight: bold;
+}
+
+.nav {
+    grid-area: 2 / 1 / 2 / 1;
+}
+
+.nav ul {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.nav ul li {
+    text-align: center;
+    padding: 0 1em;
+}
+
+/* END Styles */
+
+/* Media Queries */
+@media screen and (min-width: 1600px) {
+    :root {
+        /* - when over 1600px width raise the root unit from 10 to 20px
+           - this will have global effect
+         */
+        font-size: 20px;
+    }
+
+    /* - expand from 1 to 3 cols, and fold from 5 to 3 rows
+     */
+    .home-page--grid {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows:
+            [row-1-start] 1fr
+            [row-2-start] 3fr
+            [row-3-start] 1fr
+            [row-3-end];
+    }
+    /*
+       - the 3 sections will be on one row
+       - move section into the middle with section-two on the left and
+         section-three on the right
+     */
+    .section {
+        grid-area: 2 / 2 / 2 / 2;
+    }
+    .section-two {
+        grid-area: 2 / 1 / 2 / 1;
+    }
+    .section-three {
+        grid-area: 2 / 3 / 2 / end;
+    }
+    .footer {
+        grid-area: 3 / 1 / end / end;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header {
+        /* - make font smaller
+           - make both cols equal size
+         */
+        font-size: 1.2rem;
+        grid-template-columns: 1fr 1fr;
+    }
+    .nav {
+        /* - span all cols */
+        grid-area: 2 / 1 / 2 / end;
+    }
+}
+/* END Media Queries */
+
+/* Reset */
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+ul {
+    list-style: none;
+}
+/* END Reset */
